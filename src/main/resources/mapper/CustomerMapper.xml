@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changhui.dao.CustomerMapper">
+    <resultMap id="BaseResultMap" type="com.changhui.pojo.Customer">
+        <id column="cust_id" jdbcType="BIGINT" property="cust_id"/>
+        <result column="cust_name" jdbcType="VARCHAR" property="cust_name"/>
+        <result column="cust_user_id" jdbcType="BIGINT" property="cust_user_id"/>
+        <result column="cust_create_id" jdbcType="BIGINT" property="cust_create_id"/>
+        <result column="cust_source" jdbcType="VARCHAR" property="cust_source"/>
+        <result column="cust_industry" jdbcType="VARCHAR" property="cust_industry"/>
+        <result column="cust_level" jdbcType="VARCHAR" property="cust_level"/>
+        <result column="cust_linkman" jdbcType="VARCHAR" property="cust_linkman"/>
+        <result column="cust_phone" jdbcType="VARCHAR" property="cust_phone"/>
+        <result column="cust_mobile" jdbcType="VARCHAR" property="cust_mobile"/>
+        <result column="cust_zipcode" jdbcType="VARCHAR" property="cust_zipcode"/>
+        <result column="cust_address" jdbcType="VARCHAR" property="cust_address"/>
+        <result column="cust_createtime" jdbcType="TIMESTAMP" property="cust_createtime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        cust_id, cust_name, cust_user_id, cust_create_id, cust_source, cust_industry, cust_level,
+        cust_linkman, cust_phone, cust_mobile, cust_zipcode, cust_address, cust_createtime
+    </sql>
+    <select id="selectByExample" parameterType="com.changhui.pojo.CustomerExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from springmvc.customer
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from springmvc.customer
+        where cust_id = #{cust_id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from springmvc.customer
+        where cust_id = #{cust_id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.changhui.pojo.CustomerExample">
+        delete from springmvc.customer
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.changhui.pojo.Customer">
+        insert into springmvc.customer (cust_id, cust_name, cust_user_id,
+        cust_create_id, cust_source, cust_industry,
+        cust_level, cust_linkman, cust_phone,
+        cust_mobile, cust_zipcode, cust_address,
+        cust_createtime)
+        values (#{cust_id,jdbcType=BIGINT}, #{cust_name,jdbcType=VARCHAR}, #{cust_user_id,jdbcType=BIGINT},
+        #{cust_create_id,jdbcType=BIGINT}, #{cust_source,jdbcType=VARCHAR}, #{cust_industry,jdbcType=VARCHAR},
+        #{cust_level,jdbcType=VARCHAR}, #{cust_linkman,jdbcType=VARCHAR}, #{cust_phone,jdbcType=VARCHAR},
+        #{cust_mobile,jdbcType=VARCHAR}, #{cust_zipcode,jdbcType=VARCHAR}, #{cust_address,jdbcType=VARCHAR},
+        #{cust_createtime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.changhui.pojo.Customer">
+        insert into springmvc.customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cust_id != null">
+                cust_id,
+            </if>
+            <if test="cust_name != null">
+                cust_name,
+            </if>
+            <if test="cust_user_id != null">
+                cust_user_id,
+            </if>
+            <if test="cust_create_id != null">
+                cust_create_id,
+            </if>
+            <if test="cust_source != null">
+                cust_source,
+            </if>
+            <if test="cust_industry != null">
+                cust_industry,
+            </if>
+            <if test="cust_level != null">
+                cust_level,
+            </if>
+            <if test="cust_linkman != null">
+                cust_linkman,
+            </if>
+            <if test="cust_phone != null">
+                cust_phone,
+            </if>
+            <if test="cust_mobile != null">
+                cust_mobile,
+            </if>
+            <if test="cust_zipcode != null">
+                cust_zipcode,
+            </if>
+            <if test="cust_address != null">
+                cust_address,
+            </if>
+            <if test="cust_createtime != null">
+                cust_createtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cust_id != null">
+                #{cust_id,jdbcType=BIGINT},
+            </if>
+            <if test="cust_name != null">
+                #{cust_name,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_user_id != null">
+                #{cust_user_id,jdbcType=BIGINT},
+            </if>
+            <if test="cust_create_id != null">
+                #{cust_create_id,jdbcType=BIGINT},
+            </if>
+            <if test="cust_source != null">
+                #{cust_source,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_industry != null">
+                #{cust_industry,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_level != null">
+                #{cust_level,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_linkman != null">
+                #{cust_linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_phone != null">
+                #{cust_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_mobile != null">
+                #{cust_mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_zipcode != null">
+                #{cust_zipcode,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_address != null">
+                #{cust_address,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_createtime != null">
+                #{cust_createtime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.changhui.pojo.CustomerExample" resultType="java.lang.Long">
+        select count(*) from springmvc.customer
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update springmvc.customer
+        <set>
+            <if test="record.cust_id != null">
+                cust_id = #{record.cust_id,jdbcType=BIGINT},
+            </if>
+            <if test="record.cust_name != null">
+                cust_name = #{record.cust_name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cust_user_id != null">
+                cust_user_id = #{record.cust_user_id,jdbcType=BIGINT},
+            </if>
+            <if test="record.cust_create_id != null">
+                cust_create_id = #{record.cust_create_id,jdbcType=BIGINT},
+            </if>
+            <if test="record.cust_source != null">
+                cust_source = #{record.cust_source,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cust_industry != null">
+                cust_industry = #{record.cust_industry,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cust_level != null">
+                cust_level = #{record.cust_level,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cust_linkman != null">
+                cust_linkman = #{record.cust_linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cust_phone != null">
+                cust_phone = #{record.cust_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cust_mobile != null">
+                cust_mobile = #{record.cust_mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cust_zipcode != null">
+                cust_zipcode = #{record.cust_zipcode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cust_address != null">
+                cust_address = #{record.cust_address,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cust_createtime != null">
+                cust_createtime = #{record.cust_createtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update springmvc.customer
+        set cust_id = #{record.cust_id,jdbcType=BIGINT},
+        cust_name = #{record.cust_name,jdbcType=VARCHAR},
+        cust_user_id = #{record.cust_user_id,jdbcType=BIGINT},
+        cust_create_id = #{record.cust_create_id,jdbcType=BIGINT},
+        cust_source = #{record.cust_source,jdbcType=VARCHAR},
+        cust_industry = #{record.cust_industry,jdbcType=VARCHAR},
+        cust_level = #{record.cust_level,jdbcType=VARCHAR},
+        cust_linkman = #{record.cust_linkman,jdbcType=VARCHAR},
+        cust_phone = #{record.cust_phone,jdbcType=VARCHAR},
+        cust_mobile = #{record.cust_mobile,jdbcType=VARCHAR},
+        cust_zipcode = #{record.cust_zipcode,jdbcType=VARCHAR},
+        cust_address = #{record.cust_address,jdbcType=VARCHAR},
+        cust_createtime = #{record.cust_createtime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.changhui.pojo.Customer">
+        update springmvc.customer
+        <set>
+            <if test="cust_name != null">
+                cust_name = #{cust_name,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_user_id != null">
+                cust_user_id = #{cust_user_id,jdbcType=BIGINT},
+            </if>
+            <if test="cust_create_id != null">
+                cust_create_id = #{cust_create_id,jdbcType=BIGINT},
+            </if>
+            <if test="cust_source != null">
+                cust_source = #{cust_source,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_industry != null">
+                cust_industry = #{cust_industry,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_level != null">
+                cust_level = #{cust_level,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_linkman != null">
+                cust_linkman = #{cust_linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_phone != null">
+                cust_phone = #{cust_phone,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_mobile != null">
+                cust_mobile = #{cust_mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_zipcode != null">
+                cust_zipcode = #{cust_zipcode,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_address != null">
+                cust_address = #{cust_address,jdbcType=VARCHAR},
+            </if>
+            <if test="cust_createtime != null">
+                cust_createtime = #{cust_createtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where cust_id = #{cust_id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.changhui.pojo.Customer">
+        update springmvc.customer
+        set cust_name = #{cust_name,jdbcType=VARCHAR},
+        cust_user_id = #{cust_user_id,jdbcType=BIGINT},
+        cust_create_id = #{cust_create_id,jdbcType=BIGINT},
+        cust_source = #{cust_source,jdbcType=VARCHAR},
+        cust_industry = #{cust_industry,jdbcType=VARCHAR},
+        cust_level = #{cust_level,jdbcType=VARCHAR},
+        cust_linkman = #{cust_linkman,jdbcType=VARCHAR},
+        cust_phone = #{cust_phone,jdbcType=VARCHAR},
+        cust_mobile = #{cust_mobile,jdbcType=VARCHAR},
+        cust_zipcode = #{cust_zipcode,jdbcType=VARCHAR},
+        cust_address = #{cust_address,jdbcType=VARCHAR},
+        cust_createtime = #{cust_createtime,jdbcType=TIMESTAMP}
+        where cust_id = #{cust_id,jdbcType=BIGINT}
+    </update>
+
+    <select id="getTotalResult" resultType="java.lang.Integer" parameterType="com.changhui.pojo.QueryVo">
+        SELECT COUNT(cust_id) FROM customer
+        <if test="custName!=null || custSource!=null || custIndustry!=null || custLevel!=null">
+            <where>
+                <if test="custName!='' and custName!=null">
+                    AND cust_name LIKE "%${custName}%"
+                </if>
+                <if test="custSource!='' and custSource!=null">
+                    AND cust_source = #{custSource}
+                </if>
+                <if test="custIndustry!='' and custIndustry!=null">
+                    AND cust_industry = #{custIndustry}
+                </if>
+                <if test="custLevel!='' and custLevel!=null">
+                    AND cust_level = #{custLevel}
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <select id="getCustomerListWithCondition" resultType="com.changhui.pojo.Customer"
+            parameterType="com.changhui.pojo.QueryVo">
+        select cust_id,cust_name,
+        (SELECT dict_item_name FROM customer c2 LEFT JOIN base_dict b ON c2.cust_source = b.dict_id WHERE c.cust_id =
+        c2.cust_id) cust_source,
+        (SELECT dict_item_name FROM customer c2 LEFT JOIN base_dict b ON c2.cust_industry = b.dict_id WHERE c.cust_id =
+        c2.cust_id) cust_industry,
+        (SELECT dict_item_name FROM customer c2 LEFT JOIN base_dict b ON c2.cust_level = b.dict_id WHERE c.cust_id =
+        c2.cust_id) cust_level,
+        cust_phone,cust_mobile from customer c
+        <if test="custName!=null || custSource!=null || custIndustry!=null || custLevel!=null">
+            <where>
+                <if test="custName!='' and custName!=null">
+                    AND cust_name LIKE '%${custName}%'
+                </if>
+                <if test="custSource!='' and custSource!=null">
+                    AND cust_source = #{custSource}
+                </if>
+                <if test="custIndustry!='' and custIndustry!=null">
+                    AND cust_industry = #{custIndustry}
+                </if>
+                <if test="custLevel!='' and custLevel!=null">
+                    AND cust_level = #{custLevel}
+                </if>
+            </where>
+        </if>
+        order by cust_id asc limit #{start},#{size}
+    </select>
+
+</mapper>
